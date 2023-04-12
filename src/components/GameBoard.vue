@@ -8,7 +8,7 @@ let playerSwap: boolean = true;
 let playerOne:number[] = [];
 let playerTwo:number[] = [];
 
-const winCon = [
+const winCons = [
     [0,1,2],
     [3,4,5],
     [6,7,8],
@@ -27,10 +27,12 @@ const handleClick = (i:number) => {
     if (playerSwap) {
     gameBoard.value[i].symbol = "X";
     playerOne.push(i);
+    idWinner(playerOne)
     }
     if (!playerSwap) {
     gameBoard.value[i].symbol = "O";
     playerTwo.push(i)
+    idWinner(playerTwo)
 }
 playerSwap = !playerSwap
 }
@@ -41,6 +43,19 @@ saveGame(gameBoard.value)
 
 const saveGame = (gameBoard: GameToken[]) => {
 localStorage.setItem("gameBoard", JSON.stringify(gameBoard))
+}
+
+const idWinner = (moves:number[]) => {
+
+    let winner:boolean = winCons.some(winCon => {
+        return winCon.every(con => moves.includes(con));
+    })
+    if (winner) {
+        console.log(winner)
+    }
+    else return;
+
+
 }
 
 </script>
