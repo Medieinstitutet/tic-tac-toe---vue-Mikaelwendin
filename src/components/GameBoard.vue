@@ -5,6 +5,8 @@ import { makeGameBoard } from '../data.ts/gameData';
 import ShowBoard from './ShowBoard.vue';
 
 let playerSwap: boolean = true;
+let playerOne:number[] = [];
+let playerTwo:number[] = [];
 
 const winCon = [
     [0,1,2],
@@ -24,12 +26,17 @@ const handleClick = (i:number) => {
     gameBoard.value[i].isSet = true;
     if (playerSwap) {
     gameBoard.value[i].symbol = "X";
+    playerOne.push(i);
     }
-    else gameBoard.value[i].symbol = "O";
-    playerSwap = !playerSwap
-    saveGame(gameBoard.value)
+    if (!playerSwap) {
+    gameBoard.value[i].symbol = "O";
+    playerTwo.push(i)
 }
-    console.log(playerSwap);
+playerSwap = !playerSwap
+}
+saveGame(gameBoard.value)
+    console.log(playerOne);
+    console.log(playerTwo);
 }
 
 const saveGame = (gameBoard: GameToken[]) => {
