@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { GameToken } from '../models.ts/gameClass';
+import { GameToken } from '../models.ts/gameToken';
 import { makeGameBoard } from '../data.ts/gameData';
 import ShowBoard from './ShowBoard.vue';
+import { idWinner, saveGame } from '../functions/functions'
+import { Player } from '../models.ts/player';
 
 let playerSwap: boolean = true;
 let playerOne:number[] = [];
 let playerTwo:number[] = [];
-
-const winCons = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [2,4,6],
-]
 
 const gameBoard = ref<GameToken[]>(makeGameBoard());
 const handleClick = (i:number) => {
@@ -41,22 +32,6 @@ saveGame(gameBoard.value)
     console.log(playerTwo);
 }
 
-const saveGame = (gameBoard: GameToken[]) => {
-localStorage.setItem("gameBoard", JSON.stringify(gameBoard))
-}
-
-const idWinner = (moves:number[]) => {
-
-    let winner:boolean = winCons.some(winCon => {
-        return winCon.every(con => moves.includes(con));
-    })
-    if (winner) {
-        console.log(winner)
-    }
-    else return;
-
-
-}
 
 </script>
 <template>
