@@ -1,7 +1,7 @@
 import { GameToken } from "../models.ts/gameToken"
 import { Player } from "../models.ts/player";
 
-export const idWinner = (moves:number[]) => {
+export const idWinner = (moves:number[], player:Player) => {
 
     const winCons = [
         [0,1,2],
@@ -18,6 +18,7 @@ export const idWinner = (moves:number[]) => {
     })
     if (winner) {
         console.log(winner)
+        player.points ++;
         return winner;
     }
     else return;
