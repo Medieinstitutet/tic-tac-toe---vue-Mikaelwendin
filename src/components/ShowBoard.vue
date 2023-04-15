@@ -1,18 +1,18 @@
 <script setup lang="ts">import { ref } from 'vue';
 import { makeGameBoard } from '../data.ts/gameData';
 import { GameToken } from '../models.ts/gameToken';
+import { Player } from '../models.ts/player';
 
-interface IShowGameBoard {
+interface IShowBoardProps {
     gameToken: GameToken;
 }
-defineProps<IShowGameBoard>();
+defineProps<IShowBoardProps>();
 defineEmits(["togglePiece"])
 
 
 </script>
 <template>
-   <div class="gameBox" @click="() => $emit('togglePiece')">{{ gameToken.symbol }}</div>
-   <div class="playerBox">{{  }}</div>
+   <div class="gameBox" @click="() => $emit('togglePiece')">{{ gameToken.symbol}}</div>
 </template>
 <style scoped>
 .gameBox {

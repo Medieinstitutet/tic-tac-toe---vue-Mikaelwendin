@@ -15,13 +15,12 @@ const players = ref<Player[]>([])
 <template>
       <div v-if="!state.testbool">
     <h1>Welcome to the game!</h1>
-    <form @submit.prevent=" players = addPlayer(state.nameOne, state.nameTwo), state.testbool = true">
+    <form @submit.prevent="players = addPlayer(state.nameOne, state.nameTwo); {{ state.testbool = true }}">
     <input v-model="state.nameOne" placeholder="Spelare 1" />
     <input v-model="state.nameTwo" placeholder="Spelare 2"/>
     <button>Spara</button>
   </form>
 </div>
-<div v-if="state.testbool" ><span>{{ players[0].name + " = X " + players[0].points }}</span><span></span><span>{{ players[1].name + " = O " }}</span><span></span></div>
-<div v-if="state.testbool"><GameBoard></GameBoard></div>
+<div v-if="state.testbool"><GameBoard v-bind:players="players"></GameBoard></div>
 </template>
 <style scoped></style>
