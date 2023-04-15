@@ -1,4 +1,4 @@
-import { GameToken } from "../models.ts/gameClass";
+import { GameToken } from "../models.ts/gameToken";
 
 //const gameBoard = JSON.parse(localStorage.getItem("storageList") as string);
 

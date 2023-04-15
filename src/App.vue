@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import GameBoard from './components/GameBoard.vue';
+import MainGame from './components/MainGame.vue';
 
 </script>
 <template>
-  <GameBoard></GameBoard>
+  <MainGame></MainGame>
 </template>
 <style scoped>
 </style>
