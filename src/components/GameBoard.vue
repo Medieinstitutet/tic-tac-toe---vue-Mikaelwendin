@@ -1,64 +1,82 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { GameToken } from '../models.ts/gameToken';
 import { makeGameBoard } from '../data.ts/gameData';
 import ShowBoard from './ShowBoard.vue';
-import { idWinner, saveGame } from '../functions/functions';
+import { clearPlayers, idWinner, resetGame, saveGame } from '../functions/functions';
 import { Player } from '../models.ts/player';
 
 interface IGameBoardProps {
     players: Player[];
 }
-
 defineProps<IGameBoardProps>();
-let playerSwap: boolean = true;
-const gameBoard = ref<GameToken[]>(makeGameBoard());
-
-const checkBoard = (gameBoard:GameToken[]) => {
-   let check = gameBoard.findIndex(done => done.isSet === false)
-   if (check > 0) {
-    return false
-   }
-   return true;
+let winner = ref();
+let lastValue = ref("X");
+const gameBoard = ref<GameToken[]>([]);
+if ((localStorage.getItem("gameBoard") === null)) {
+    gameBoard.value = makeGameBoard();
+}
+else {gameBoard.value = (JSON.parse(localStorage.getItem("gameBoard") || "[]"));
 }
 
-const handleClick = (i:number, players:Player[]) => {
+
+
+    const handleClick = (i:number, players:Player[]) => {
+        let counter = JSON.parse(localStorage.getItem("counter") || "0");
+        lastValue.value = localStorage.getItem("lastValue") || "X" as string;
+        
     if (!gameBoard.value[i].isSet) {
     gameBoard.value[i].isSet = true;
-    if (playerSwap) {
-    gameBoard.value[i].symbol = "X";
-    players[0].moves.push(i);
-    idWinner(players[0].moves, players[0])
+    if (lastValue.value === "O") {
+        gameBoard.value[i].symbol = "X"
+        lastValue.value = "X"
+        players[0].moves.push(i);
+        winner.value = idWinner(players[0].moves, players[0])
+        if (winner.value) {
+            clearPlayers(players)
+            winner.value = !winner.value;
+            gameBoard.value = makeGameBoard();
+            counter = -1;
+        }
     }
-    if (!playerSwap) {
-    gameBoard.value[i].symbol = "O";
-    players[1].moves.push(i)
-    idWinner(players[1].moves, players[1])
+    else {
+        gameBoard.value[i].symbol = "O";
+        lastValue.value = "O";
+        players[1].moves.push(i);
+        winner.value = idWinner(players[1].moves, players[1])
+        if (winner.value) {
+            clearPlayers(players)
+            winner.value = !winner.value;
+            gameBoard.value = makeGameBoard();
+            counter = -1;
+        }
+    }
+    counter ++;
+    console.log(counter)
+    if (counter === 9) {
+        console.log("Hej")
+        gameBoard.value = makeGameBoard()
+        clearPlayers(players)
+        counter = 0;
+    }
 }
-let isDone = checkBoard(gameBoard.value);
-if (isDone) {
-    window.alert("Lol");
-    return 1;
+saveGame(gameBoard.value, lastValue.value, counter, players)
 }
-playerSwap = !playerSwap
-}
-saveGame(gameBoard.value)
-    console.log(players[0]);
-    console.log(players[1]);
-}
+
 
 
 </script>
 <template>
     <div class="gameBoard">
 <ShowBoard :gameToken="gameToken"
-v-for="(gameToken, id) in gameBoard"
 @togglePiece="() => handleClick(id, players)"
+v-for="(gameToken, id) in gameBoard"
 :key="id"
 ></ShowBoard>
 </div>
 <div class="playerBox">{{ players[0].name + " = X - Points: " + players[0].points }}</div>
 <div class="playerBox">{{ players[1].name + " = O - Points: " + players[1].points }}</div>
+<button @click="resetGame">Reset game</button>
 </template>
 <style scoped>
 .gameBoard {
