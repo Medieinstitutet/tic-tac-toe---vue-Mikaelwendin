@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { GameToken } from '../models.ts/gameToken';
-import { makeGameBoard } from '../data.ts/gameData';
 import ShowBoard from './ShowBoard.vue';
-import { clearPlayers, idWinner, resetGame, saveGame } from '../functions/functions';
+import { clearPlayers, idWinner, makeGameBoard, resetGame, saveGame } from '../functions/functions';
 import { Player } from '../models.ts/player';
 
 interface IGameBoardProps {
@@ -52,9 +51,7 @@ else {gameBoard.value = (JSON.parse(localStorage.getItem("gameBoard") || "[]"));
         }
     }
     counter ++;
-    console.log(counter)
     if (counter === 9) {
-        console.log("Hej")
         gameBoard.value = makeGameBoard()
         clearPlayers(players)
         counter = 0;

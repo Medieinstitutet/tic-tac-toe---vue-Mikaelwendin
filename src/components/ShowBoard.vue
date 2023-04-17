@@ -1,7 +1,5 @@
-<script setup lang="ts">import { ref } from 'vue';
-import { makeGameBoard } from '../data.ts/gameData';
+<script setup lang="ts">
 import { GameToken } from '../models.ts/gameToken';
-import { Player } from '../models.ts/player';
 
 interface IShowBoardProps {
     gameToken: GameToken;

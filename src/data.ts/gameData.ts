@@ -1,6 +1,6 @@
 import { GameToken } from "../models.ts/gameToken";
 
-export const makeGameBoard = () => {
+/* export const makeGameBoard = () => {
     const gameBoard:GameToken[] = [];
     let id = 0;
 for (let i = 0; i < 9; i++) {
@@ -9,4 +9,4 @@ for (let i = 0; i < 9; i++) {
         gameBoard[i] = gameToken;
      }
      return gameBoard;
-}
+} */

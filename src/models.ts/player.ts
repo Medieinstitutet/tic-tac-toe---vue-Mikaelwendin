@@ -3,7 +3,6 @@ export class Player {
         public name: string,
         public moves:number[],
         public points:number,
-        public active:boolean,
     )
     {}
 }
