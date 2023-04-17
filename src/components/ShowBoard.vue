@@ -10,7 +10,7 @@ defineEmits(["togglePiece"])
 
 </script>
 <template>
-   <div class="gameBox" @click="() => $emit('togglePiece')">{{ gameToken.symbol }}</div>
+    <div class="gameBox" @click="() => $emit('togglePiece')">{{ gameToken.symbol }}</div>
 </template>
 <style scoped>
 .gameBox {
@@ -22,9 +22,6 @@ defineEmits(["togglePiece"])
     border: 1px black solid;
     cursor: pointer;
     font-size: 40px;
-    
+
 }
-
-
-
 </style>
