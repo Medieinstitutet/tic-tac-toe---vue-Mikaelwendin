@@ -78,7 +78,15 @@ const handleClick = (i: number, players: Player[]) => {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 20vw;
-    height: 20vw;
+    width: 50vw;
+    height: 50vw;
+}
+
+    @media only screen and (min-width: 992px) {
+        .gameBoard {
+        width: 30vw;
+        height: 30vw;
+        }
+ 
 }
 </style>
